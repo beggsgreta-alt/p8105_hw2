@@ -5,6 +5,7 @@ output: github_document
 
 ```{r, setup}
 library(tidyverse)
+library(janitor)
 ```
 
 ## Problem 1
@@ -20,8 +21,8 @@ pols_data =
   pivot_longer(
     cols = c(prez_gop, prez_dem),
     names_to = "president",
-    values_to = "words"
-  )
+    values_to = "words") %>% 
+    select(-day)
 ```
 
 ```{r}
