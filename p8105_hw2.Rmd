@@ -14,7 +14,8 @@ Load the data
 ```{r}
 pols_data = 
   read_csv("./fivethirtyeight_datasets/pols-month.csv") %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  separate(mon, into = c("year", "month", "day"))
 
 unemployment_data = 
   read_csv("./fivethirtyeight_datasets/unemployment.csv") %>% 
@@ -22,6 +23,7 @@ unemployment_data =
 
 snp_data = 
   read_csv("./fivethirtyeight_datasets/snp.csv") %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  separate(date, into = c("year", "month", "day"))
 ```
 
