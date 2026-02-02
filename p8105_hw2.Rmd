@@ -1,0 +1,6 @@
+---
+title: "p8105_hw2"
+output: github_document
+date: "2026-02-02"
+---
+
