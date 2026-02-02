@@ -28,7 +28,11 @@ pols_data =
 ```{r}
 unemployment_data =
   read_csv("./fivethirtyeight_datasets/unemployment.csv") %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  pivot_longer(
+    jan:dec,
+    names_to = "month"
+  )
 ```
 
 ```{r}
