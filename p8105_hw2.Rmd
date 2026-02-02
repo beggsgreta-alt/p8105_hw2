@@ -15,15 +15,21 @@ Load the data
 pols_data = 
   read_csv("./fivethirtyeight_datasets/pols-month.csv") %>% 
   janitor::clean_names() %>% 
-  separate(mon, into = c("year", "month", "day"))
+  separate(mon, into = c("year", "month", "day")) %>% 
+  mutate(month = recode(month, `01` = "january", `02` = "february", `03` = "march", `04` = "april", `05` = "may", `06` = "june", `07` = "july", `08` = "august", `09` = "september", `10` = "october", `11` = "november", `12` = "december"))
+```
 
-unemployment_data = 
+```{r}
+unemployment_data =
   read_csv("./fivethirtyeight_datasets/unemployment.csv") %>% 
   janitor::clean_names()
+```
 
+```{r}
 snp_data = 
   read_csv("./fivethirtyeight_datasets/snp.csv") %>% 
   janitor::clean_names() %>% 
-  separate(date, into = c("year", "month", "day"))
+  separate(date, into = c("year", "month", "day")) %>% 
+  mutate(month = recode(month, `1` = "january", `2` = "february", `3` = "march", `4` = "april", `5` = "may", `6` = "june", `7` = "july", `8` = "august", `9` = "september", `10` = "october", `11` = "november", `12` = "december"))
 ```
 
