@@ -124,12 +124,30 @@ trash_wheel =
 ```{r}
 data_1 = 
   read_csv("./zillow_data/Zip Codes.csv") %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  relocate(file_date) %>% 
+  select (-state_fips, -county_code, -county_fips) %>% 
+  rename(date = file_date) %>% 
+  mutate(date = mdy(date))
 ```
 
 ```{r}
 data_2 = 
   read_csv("./zillow_data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.csv") %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  pivot_longer(
+    cols = starts_with("x"),
+    names_to = "date",
+    values_to = "price") %>%
+  mutate(date = ymd(sub("^x", "", date))) %>% 
+  relocate(date) %>% 
+  select(-region_id, -size_rank, -region_type, -state_name, -state, -city, -metro) %>% 
+  rename(county = county_name, zip_code = region_name)
+```
+
+```{r}
+data_combined = 
+  full_join(data_2, data_1)
+  by = c("date", "county", "zip_code")
 ```
 
