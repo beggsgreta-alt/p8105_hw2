@@ -31,8 +31,7 @@ unemployment_data =
   janitor::clean_names() %>% 
   pivot_longer(
     jan:dec,
-    names_to = "month"
-  )
+    names_to = "month")
 ```
 
 ```{r}
@@ -41,6 +40,8 @@ snp_data =
   janitor::clean_names() %>% 
   separate(date, into = c("year", "month", "day")) %>% 
   mutate(month = recode(month, `1` = "january", `2` = "february", `3` = "march", `4` = "april", `5` = "may", `6` = "june", `7` = "july", `8` = "august", `9` = "september", `10` = "october", `11` = "november", `12` = "december")) %>% 
-  select(-day)
+  select(-day) %>% 
+  mutate(year = str_pad(year, width = 2, pad = "0")) %>% 
+  mutate(year = paste0("20", year))
 ```
 
