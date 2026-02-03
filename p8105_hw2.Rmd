@@ -119,3 +119,17 @@ trash_wheel =
   by = c("day")
 ```
 
+## Problem 3
+
+```{r}
+data_1 = 
+  read_csv("./zillow_data/Zip Codes.csv") %>% 
+  janitor::clean_names()
+```
+
+```{r}
+data_2 = 
+  read_csv("./zillow_data/Zip_zori_uc_sfrcondomfr_sm_month_NYC.csv") %>% 
+  janitor::clean_names()
+```
+
