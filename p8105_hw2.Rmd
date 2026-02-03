@@ -142,12 +142,25 @@ data_2 =
   mutate(date = ymd(sub("^x", "", date))) %>% 
   relocate(date) %>% 
   select(-region_id, -size_rank, -region_type, -state_name, -state, -city, -metro) %>% 
-  rename(county = county_name, zip_code = region_name)
+  rename(county = county_name, zip_code = region_name) %>% 
+  mutate(date = ymd(date))
 ```
 
 ```{r}
 data_combined = 
-  full_join(data_2, data_1)
-  by = c("date", "county", "zip_code")
+  full_join(data_2, data_1,
+  by = c("date", "county", "zip_code"))
 ```
 
+```{r}
+library(dplyr)
+library(lubridate)
+```
+
+```{r}
+jan_data = 
+  data_combined %>% 
+  filter(month(date) == 1 & year(date) %in% c(2020,2021)) %>% 
+  mutate(date = ymd(as.character(date))) %>% 
+  mutate(year = year(date), month = month(date))
+```
