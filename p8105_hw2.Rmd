@@ -10,8 +10,6 @@ library(janitor)
 
 ## Problem 1
 
-Load the data
-
 ```{r}
 pols_data = 
   read_csv("./fivethirtyeight_datasets/pols-month.csv") %>% 
@@ -77,5 +75,47 @@ pus_data =
     (unemployment_data %>% 
        mutate(year = as.integer(year))),
     by = c("year", "month"))
+```
+
+## Problem 2
+
+```{r}
+mr_trash_wheel = 
+  readxl::read_excel(
+    path = "./202409 Trash Wheel Collection Data.xlsx", 
+    sheet = "Mr. Trash Wheel",
+    range = "A2:N653") %>% 
+  janitor::clean_names() %>% 
+  mutate(sports_balls = as.integer(sports_balls)) %>% 
+  mutate(homes_powered = as.integer(homes_powered)) %>% 
+  select(-year, -month)
+```
+
+```{r}
+prof_trash_wheel = 
+  readxl::read_excel(
+    path = "./202409 Trash Wheel Collection Data.xlsx",
+    sheet = "Professor Trash Wheel",
+    range = "A2:M120") %>% 
+  janitor::clean_names() %>% 
+  mutate(homes_powered = as.integer(homes_powered)) %>% 
+  select(-year, -month)
+```
+
+```{r}
+gwynnda_trash_wheel = 
+  readxl::read_excel(
+    path = "./202409 Trash Wheel Collection Data.xlsx",
+    sheet = "Gwynnda Trash Wheel",
+    range = "A2:L265") %>% 
+  janitor::clean_names() %>% 
+  mutate(homes_powered = as.integer(homes_powered)) %>% 
+  select(-year, -month)
+```
+
+```{r}
+trash_wheel = 
+  bind_rows(mr_trash_wheel, prof_trash_wheel, gwynnda_trash_wheel)
+  by = c("day")
 ```
 
