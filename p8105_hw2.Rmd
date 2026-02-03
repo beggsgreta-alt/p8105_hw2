@@ -44,7 +44,8 @@ unemployment_data =
   janitor::clean_names() %>% 
   pivot_longer(
     jan:dec,
-    names_to = "month")
+    names_to = "month") %>% 
+  mutate(month = recode(month, `jan` = "january", `feb` = "february", `mar` = "march", `apr` = "april", `may` = "may", `jun` = "june", `jul` = "july", `aug` = "august", `sep` = "september", `oct` = "october", `nov` = "november", `dec` = "december"))
 ```
 
 ```{r}
@@ -60,18 +61,21 @@ snp_data =
 
 ```{r}
 p_and_s_data = 
-    inner_join(pols_data, snp_data, by = c("year", "month"))
+  full_join(
+    (pols_data %>% 
+       mutate(year = as.integer(year))),
+    (snp_data %>% 
+      mutate(year = as.integer(year))), 
+    by = c("year", "month"))
 ```
 
 ```{r}
 pus_data = 
   full_join(
-    (pols_data %>% 
-       mutate(year = as.integer(year))),
-    (snp_data %>% 
+    (p_and_s_data %>% 
       mutate(year = as.integer(year))),
     (unemployment_data %>% 
-       mutate(year = as.integer(year))), 
+       mutate(year = as.integer(year))),
     by = c("year", "month"))
 ```
 
